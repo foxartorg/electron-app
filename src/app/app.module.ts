@@ -1,7 +1,7 @@
 import {AppComponent} from './app.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {NgxElectronModule} from 'ngx-electron';
+// import {NgxElectronModule} from 'ngx-electron';
 import {AppRoutingModule} from './app-routing.module';
 
 // [...]
@@ -13,7 +13,7 @@ import {AppRoutingModule} from './app-routing.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgxElectronModule
+    // NgxElectronModule
   ],
   providers: [],
   bootstrap: [AppComponent]

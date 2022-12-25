@@ -8,9 +8,7 @@
 // export class AppComponent {
 //   title = 'electron-app';
 // }
-// import {ElectronService} from 'ngx-electron';
 import {Component, OnInit, ViewChild} from "@angular/core";
-import {ElectronService} from "ngx-electron";
 
 @Component({
   selector: 'app-root',
@@ -25,11 +23,11 @@ export class AppComponent implements OnInit {
   @ViewChild('videoElement', {static: true}) videoElement: any;
   video: any;
 
-  constructor(private _electronService: ElectronService) {
+  constructor() {
   }
 
   ngOnInit(): void {
-    this.video = this.videoElement.nativeElement;
+    // this.video = this.videoElement.nativeElement;
   }
 
   displaySources() {
