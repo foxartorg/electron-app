@@ -26,9 +26,10 @@ export class AppComponent implements OnInit {
   constructor() {
   }
 
+
   ngOnInit(): void {
     // this.video = this.videoElement.nativeElement;
-    console.log('XXX');
+    console.log('App Component');
   }
 
   displaySources() {

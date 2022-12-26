@@ -1,32 +1,46 @@
 const { app, BrowserWindow } = require('electron');
-const index = `file:///${__dirname}/dist/electron-app/index.html`;
-let ApplicationWindow;
+const path = require('path');
+const electronReload = require('electron-reload');
+electronReload(__dirname, {});
 
-function createApplicationWindow() {
-  ApplicationWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+function createWindow() {
+  const url = `file:///${path.join(__dirname, 'dist', 'electron-app', 'index.html')}`;
+  const win = new BrowserWindow({
+    width: 1280,
+    height: 960,
     webPreferences: {
       nodeIntegration: true,
+      // preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, 'dist', 'electron-app', 'assets', 'preload.js'),
     },
   });
-  ApplicationWindow.loadURL(index).then(() => {
-    ApplicationWindow.webContents.openDevTools();
+  win.loadURL(url).then(() => {
+    win.webContents.openDevTools();
   });
-  // Open the DevTools.
-  ApplicationWindow.on('closed', function() {
-    ApplicationWindow = null;
+  // win.loadFile(url).then(() => {
+  //   win.webContents.openDevTools();
+  // });
+  win.on('closed', () => {
   });
 }
 
-app.on('ready', createApplicationWindow);
+/**
+ * Opening your web page in a browser window
+ */
+app.whenReady().then(() => {
+  createWindow();
+  /**
+   * Open a window if none are open (macOS)
+   */
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
+});
+/**
+ * Quit the app when all windows are closed (Windows & Linux)
+ */
 app.on('window-all-closed', function() {
   if (process.platform !== 'darwin') {
     app.quit();
-  }
-});
-app.on('activate', function() {
-  if (ApplicationWindow === null) {
-    createApplicationWindow();
   }
 });
