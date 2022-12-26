@@ -1,7 +1,11 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
-const electronReload = require('electron-reload');
-electronReload(__dirname, {});
+// const electronReload = require('electron-reload');
+// electronReload(__dirname, {});
+require('electron-reload')(__dirname, {
+  electron: path.join(__dirname, 'node_modules', '.bin', 'electron'),
+  // hardResetMethod: 'exit',
+});
 
 function createWindow() {
   const url = `file:///${path.join(__dirname, 'dist', 'electron-app', 'index.html')}`;
