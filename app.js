@@ -4,7 +4,7 @@ const path = require('path');
 // electronReload(__dirname, {});
 require('electron-reload')(__dirname, {
   electron: path.join(__dirname, 'node_modules', '.bin', 'electron'),
-  // hardResetMethod: 'exit',
+  hardResetMethod: 'exit',
 });
 
 function createWindow() {
@@ -19,7 +19,7 @@ function createWindow() {
     },
   });
   win.loadURL(url).then(() => {
-    win.webContents.openDevTools();
+    // win.webContents.openDevTools();
   });
   // win.loadFile(url).then(() => {
   //   win.webContents.openDevTools();
@@ -37,7 +37,9 @@ app.whenReady().then(() => {
    * Open a window if none are open (macOS)
    */
   app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow();
+    }
   });
 });
 /**
@@ -47,4 +49,12 @@ app.on('window-all-closed', function() {
   if (process.platform !== 'darwin') {
     app.quit();
   }
+});
+app.on('before-quit', (event) => {
+  // This is never called! Replacing before-quit with will-quit doesn't help.
+  console.log('Caught before-quit. Exiting in 5 seconds.');
+  event.preventDefault();
+  setTimeout(() => {
+    process.exit(0);
+  }, 5000);
 });
